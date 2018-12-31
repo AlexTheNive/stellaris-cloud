@@ -5,8 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZoksStellarisEmpires"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Zok's Stellaris Spezies Cloud" Height="766.238" Width="615" d:DataContext="{d:DesignInstance local:MainViewModel }" Icon="stellaris_101.ico">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="52"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox Grid.Column="0" SelectedItem="{Binding SelectedLocalEmpire}" Margin="10,36,10,10" ItemsSource="{Binding EmpireFile.Empires}"/>
+        <Label Grid.Column="0" Content="Lokale Spezies" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"
+               Height="26" Width="87"/>
+        <ListBox Margin="10,36,10,10" SelectedItem="{Binding SelectedOnlineEmpire}" ItemsSource="{Binding EmpireOnline.Empires}"
+                 Grid.Column="2">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="{Binding Name}"/>
+                        <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=DataContext.DeleteOnlineEmpireCommand}" CommandParameter="{Binding }">
+                            <Label FontSize="14">🗑</Label>
+                        </Button>
+                    </StackPanel>
+                </DataTemplate>
+                </ListBox.ItemTemplate>
+        </ListBox>
+        <Label Content="Spezies auf Andre's Server" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"
+               Grid.Column="2" Height="26" Width="149"/>
+        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+            <Button Command="{Binding UploadEmpiresCommand}" Height="30" Margin="3">
+                <Label Margin="0,-21,0,0"  FontSize="36" RenderTransformOrigin="0.5,0.5">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                            <SkewTransform AngleY="0" AngleX="0"/>
+                            <RotateTransform Angle="0"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform> ⤽
+                </Label>
+            </Button>
+            <Button Command="{Binding DownloadEmpiresCommand}" Height="30" Margin="3">
+                <Label Margin="0,-21,0,0"  FontSize="36">⤽</Label>
+            </Button>
+        </StackPanel>
+        <Button HorizontalAlignment="Right" Grid.Column="0" Height="30" Margin="0,6,10,0" 
+                VerticalAlignment="Top" Width="45" Command="{Binding SaveLocalEmpiresCommand}">
+            <Label FontSize="20" Margin="0,-6,0,0">🖫</Label>
+        </Button>
+        <Button Margin="0,36,0,0" Height="30" VerticalAlignment="Top" Grid.Column="1" Command="{Binding RefreshEmpiresCommand}">
+            <Label >⭯</Label>
+        </Button>
+
+
     </Grid>
 </Window>
